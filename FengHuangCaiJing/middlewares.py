@@ -48,7 +48,7 @@ class FenghuangcaijingSpiderMiddleware(object):
         url = response.url
         hurl = hash_url(url)
         self.conn.set(hurl, 'ok')
-        print('url: %s' % url)
+        print('have saved url: %s' % url)
 
         for i in result:
             yield i
@@ -100,12 +100,20 @@ class FenghuangcaijingDownloaderMiddleware(object):
         # - or return a Request object
         # - or raise IgnoreRequest: process_exception() methods of
         #   installed downloader middleware will be called
+        HA_urls = [r"http://app.finance.ifeng.com/list/stock.php?t=ha&f=symbol&o=asc&p={}".format(i) for i in range(1, 28)]
+        HB_urls = [r'http://app.finance.ifeng.com/list/stock.php?t=hb&f=symbol&o=asc&p=1']
+        SA_urls = [r'http://app.finance.ifeng.com/list/stock.php?t=sa&f=symbol&o=asc&p={}'.format(i) for i in range(1, 40)]
+        SB_urls = [r'http://app.finance.ifeng.com/list/stock.php?t=sb&f=symbol&o=asc&p=1']
+        start_urls = HA_urls + HB_urls + SA_urls + SB_urls
 
         url = request.url
-        hurl = hash_url(url)
-        if self.conn.get(hurl) == b'ok':
-            raise IgnoreRequest
-
+        if not url in start_urls:
+            hurl = hash_url(url)
+            if self.conn.get(hurl) == b'ok':
+                print('have parsed url: %s' % url)
+                raise IgnoreRequest
+        else:
+            return None
 
 
         # return None

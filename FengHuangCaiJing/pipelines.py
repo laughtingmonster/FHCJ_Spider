@@ -40,7 +40,7 @@ def save_json(item):
             h2p_dict = {}
             h2p_dict['han'] = name
             pyname = get_pinyin(name)
-            print("pyname: %s" % pyname)
+            # print("pyname: %s" % pyname)
             h2p_dict['pin'] = pyname
             han_pin.append(h2p_dict)
         
@@ -51,7 +51,7 @@ def save_json(item):
                 h2p_dict = {}
                 h2p_dict['han'] = title
                 pytitle = get_pinyin(title)
-                print('pytitle: %s' % pytitle)
+                # print('pytitle: %s' % pytitle)
                 h2p_dict['pin'] = pytitle
                 han_pin.append(h2p_dict)
         
@@ -78,6 +78,6 @@ def save_json(item):
 
         f1.write(newdata + '\n')
         # print(newdata)
-        print('================== %s =====================' % filename)
+        # print('================== %s =====================' % filename)
 
 
